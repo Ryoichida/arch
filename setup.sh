@@ -49,6 +49,7 @@ mkswap /dev/vg00/swap
 mount /dev/vg00/root /mnt
 mkdir -p /mnt/boot /mnt/usr /mnt/home /mnt/tmp
 swapon /dev/vg00/swap
+mount /dev/sda1 /mnt/boot
 mount /dev/vg00/home /mnt/home
 mount /dev/vg00/usr /mnt/usr
 mount /dev/vg00/var /mnt/var
@@ -80,4 +81,4 @@ echo zac:root | chpasswd
 echo "zac ALL=(ALL) ALL" >> /etc/sudoers.d/zac
 EOF
 
-reboot
+shutdown -h now
