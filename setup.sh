@@ -59,8 +59,7 @@ mount /dev/vg00/tmp /mnt/tmp
 pacstrap /mnt base linux linux-firmware dhcpcd dhclient vim firefox sudo xorg-server xorg-xinit grub
 genfstab -U /mnt >> /mnt/etc/fstab
 
-arch-chroot /mnt
-
+arch-chroot /mnt /bin/bash <<EOF
 ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
 hwclock --systohc
 sed -i '177s/.//' /etc/locale.gen
@@ -79,6 +78,6 @@ grub-mkconfig -o /boot/grub/grub.cfg
 useradd -m zac
 echo zac:root | chpasswd
 echo "zac ALL=(ALL) ALL" >> /etc/sudoers.d/zac
+EOF
 
-exit
 reboot
