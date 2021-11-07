@@ -73,7 +73,8 @@ echo "127.0.0.1 localhost" >> /etc/hosts
 echo "::1       localhost" >> /etc/hosts
 echo "127.0.1.1 void.localdomain void" >> /etc/hosts
 echo root:root | chpasswd
-
+sed -i 's/fsck)/fsck systemd lvm2)/' /etc/mkinitcpio.conf
+mkinitcpio -P
 grub-install --target=i386-pc /dev/sda # replace sdx with your disk name, not the partition
 grub-mkconfig -o /boot/grub/grub.cfg
 
