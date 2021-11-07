@@ -59,7 +59,7 @@ mount /dev/vg00/tmp /mnt/tmp
 pacstrap /mnt base linux linux-firmware dhcpcd dhclient vim firefox sudo xorg-server xorg-xinit grub
 genfstab -U /mnt >> /mnt/etc/fstab
 
-archroot /mnt
+arch-chroot /mnt
 
 ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
 hwclock --systohc
