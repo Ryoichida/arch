@@ -56,8 +56,9 @@ mount /dev/sda1 /mnt/boot
 mount /dev/vg00/home /mnt/home
 mount /dev/vg00/usr /mnt/usr
 mount /dev/vg00/var /mnt/var
-mkdir -p /mnt/var/log /var/cache/pacman
+mkdir -p /mnt/var/log
 mount /dev/vg00/log /mnt/var/log
+mkdir -p /mnt/var/cache/pacman
 mount /dev/vg00/pacman /mnt/var/cache/pacman
 mount /dev/vg00/tmp /mnt/tmp
 
@@ -86,4 +87,4 @@ echo zac:root | chpasswd
 echo "zac ALL=(ALL) ALL" >> /etc/sudoers.d/zac
 EOF
 
-#shutdown -h now
+shutdown -h now
