@@ -81,4 +81,4 @@ echo zac:root | chpasswd
 echo "zac ALL=(ALL) ALL" >> /etc/sudoers.d/zac
 EOF
 
-shutdown -h now
+#shutdown -h now
