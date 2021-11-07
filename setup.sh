@@ -58,7 +58,7 @@ mkdir -p /mnt/var/log
 mount /dev/vg00/log /mnt/var/log
 mount /dev/vg00/tmp /mnt/tmp
 
-pacstrap /mnt base linux linux-firmware dhcpcd dhclient vim firefox sudo xorg-server xorg-xinit grub
+pacstrap /mnt base linux linux-firmware dhcpcd dhclient vim firefox sudo xorg-server xorg-xinit grub lvm2
 genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt /bin/bash <<EOF
