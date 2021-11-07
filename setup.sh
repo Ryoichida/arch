@@ -31,8 +31,8 @@ EOF
 pvcreate /dev/sda2
 vgcreate vg00 /dev/sda2
 lvcreate -L 5G -n root vg00 
-lvcreate -L 3G -n usr vg00 
-lvcreate -L 5G -n home vg00 
+lvcreate -L 5G -n usr vg00 
+lvcreate -L 3G -n home vg00 
 lvcreate -L 1G -n var vg00 
 lvcreate -L 1G -n log vg00 
 lvcreate -L 1G -n tmp vg00 
