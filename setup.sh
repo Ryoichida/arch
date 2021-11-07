@@ -47,14 +47,38 @@ mkfs.ext4 /dev/vg00/tmp
 mkswap /dev/vg00/swap
 
 mount /dev/vg00/root /mnt
-mkdir -p /mnt/boot /mnt/usr /mnt/home /mnt/var/log /mnt/tmp
+mkdir -p /mnt/boot /mnt/usr /mnt/home /mnt/tmp
 swapon /dev/vg00/swap
 mount /dev/vg00/home /mnt/home
 mount /dev/vg00/usr /mnt/usr
 mount /dev/vg00/var /mnt/var
+mkdir -p /mnt/var/log
 mount /dev/vg00/log /mnt/var/log
 mount /dev/vg00/tmp /mnt/tmp
 
 pacstrap /mnt base linux linux-firmware dhcpcd dhclient vim firefox sudo xorg-server xorg-xinit grub
 genfstab -U /mnt >> /mnt/etc/fstab
 
+archroot /mnt
+
+ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
+hwclock --systohc
+sed -i '177s/.//' /etc/locale.gen
+locale-gen
+echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+echo "KEYMAP=fr" >> /etc/vconsole.conf
+echo "void" >> /etc/hostname
+echo "127.0.0.1 localhost" >> /etc/hosts
+echo "::1       localhost" >> /etc/hosts
+echo "127.0.1.1 void.localdomain void" >> /etc/hosts
+echo root:root | chpasswd
+
+grub-install --target=i386-pc /dev/sda # replace sdx with your disk name, not the partition
+grub-mkconfig -o /boot/grub/grub.cfg
+
+useradd -m zac
+echo zac:root | chpasswd
+echo "zac ALL=(ALL) ALL" >> /etc/sudoers.d/zac
+
+exit
+reboot
