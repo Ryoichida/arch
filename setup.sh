@@ -38,6 +38,7 @@ lvcreate -L 1G -n log vg00
 lvcreate -L 1G -n tmp vg00 
 lvcreate -L 1G -n swap vg00
 
+mkfs.ext4 /dev/sda1
 mkfs.ext4 /dev/vg00/root
 mkfs.ext4 /dev/vg00/usr
 mkfs.ext4 /dev/vg00/home
