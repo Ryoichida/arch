@@ -38,7 +38,7 @@ lvcreate -L 1G -n log vg00
 lvcreate -L 1G -n tmp vg00 
 lvcreate -L 1G -n swap vg00
 
-mkfs.ext4 /dev/sda1
+mkfs.fat -F32 /dev/sda1
 mkfs.ext4 /dev/vg00/root
 mkfs.ext4 /dev/vg00/usr
 mkfs.ext4 /dev/vg00/home
@@ -48,7 +48,7 @@ mkfs.ext4 /dev/vg00/tmp
 mkswap /dev/vg00/swap
 
 mount /dev/vg00/root /mnt
-mkdir -p /mnt/boot /mnt/usr /mnt/home /mnt/tmp
+mkdir -p /mnt/boot /mnt/usr /mnt/var /mnt/home /mnt/tmp
 swapon /dev/vg00/swap
 mount /dev/sda1 /mnt/boot
 mount /dev/vg00/home /mnt/home
@@ -74,7 +74,7 @@ echo "::1       localhost" >> /etc/hosts
 echo "127.0.1.1 void.localdomain void" >> /etc/hosts
 echo root:root | chpasswd
 
-grub-install --target=i386-pc /dev/sda1 # replace sdx with your disk name, not the partition
+grub-install --target=i386-pc /dev/sda # replace sdx with your disk name, not the partition
 grub-mkconfig -o /boot/grub/grub.cfg
 
 useradd -m zac
