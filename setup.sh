@@ -62,7 +62,7 @@ mkdir -p /mnt/var/cache/pacman
 mount /dev/vg00/pacman /mnt/var/cache/pacman
 mount /dev/vg00/tmp /mnt/tmp
 
-pacstrap /mnt base linux linux-firmware dhcpcd dhclient vim firefox sudo xorg-server xorg-xinit grub lvm2 archlinux-keyring
+pacstrap /mnt base linux linux-firmware dhcpcd dhclient vim firefox sudo xorg-server xorg-xinit grub lvm2 archlinux-keyring virtualbox-guest-utils
 genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt /bin/bash <<EOF
@@ -82,6 +82,9 @@ mkinitcpio -P
 grub-install --target=i386-pc /dev/sda # replace sdx with your disk name, not the partition
 grub-mkconfig -o /boot/grub/grub.cfg
 systemctl enable dhcpcd.service
+systemctl enable systemd-timesyncd.service
+systemctl enable systemd-time-wait-sync.service
+systemctl enable vboxservice
 useradd -m zac
 echo zac:root | chpasswd
 echo "zac ALL=(ALL) ALL" >> /etc/sudoers.d/zac
