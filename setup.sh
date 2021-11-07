@@ -28,3 +28,33 @@ sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk ${TGTDEV}
   q # and we're done
 EOF
 
+pvcreate /dev/sda2
+vgcreate vg00 /dev/sda2
+lvcreate -L 5G -n root vg00 
+lvcreate -L 3G -n usr vg00 
+lvcreate -L 5G -n home vg00 
+lvcreate -L 1G -n var vg00 
+lvcreate -L 1G -n log vg00 
+lvcreate -L 1G -n tmp vg00 
+lvcreate -L 1G -n swap vg00
+
+mkfs.ext4 /dev/vg00/root
+mkfs.ext4 /dev/vg00/usr
+mkfs.ext4 /dev/vg00/home
+mkfs.ext4 /dev/vg00/var
+mkfs.ext4 /dev/vg00/log
+mkfs.ext4 /dev/vg00/tmp
+mkswap /dev/vg00/swap
+
+mount /dev/vg00/root /mnt
+mkdir -p /mnt/boot /mnt/usr /mnt/home /mnt/var/log /mnt/tmp
+swapon /dev/vg00/swap
+mount /dev/vg00/home /mnt/home
+mount /dev/vg00/usr /mnt/usr
+mount /dev/vg00/var /mnt/var
+mount /dev/vg00/log /mnt/var/log
+mount /dev/vg00/tmp /mnt/tmp
+
+pacstrap /mnt base linux linux-firmware dhcpcd dhclient vim firefox sudo xorg-server xorg-xinit grub
+genfstab -U /mnt >> /mnt/etc/fstab
+
