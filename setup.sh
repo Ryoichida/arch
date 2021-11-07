@@ -36,6 +36,7 @@ lvcreate -L 3G -n home vg00
 lvcreate -L 1G -n var vg00 
 lvcreate -L 1G -n log vg00 
 lvcreate -L 1G -n tmp vg00 
+lvcreate -L 2G -n pacman vg00
 lvcreate -L 1G -n swap vg00
 
 mkfs.fat -F32 /dev/sda1
@@ -45,6 +46,7 @@ mkfs.ext4 /dev/vg00/home
 mkfs.ext4 /dev/vg00/var
 mkfs.ext4 /dev/vg00/log
 mkfs.ext4 /dev/vg00/tmp
+mkfs.ext4 /dev/vg00/pacman
 mkswap /dev/vg00/swap
 
 mount /dev/vg00/root /mnt
@@ -54,11 +56,12 @@ mount /dev/sda1 /mnt/boot
 mount /dev/vg00/home /mnt/home
 mount /dev/vg00/usr /mnt/usr
 mount /dev/vg00/var /mnt/var
-mkdir -p /mnt/var/log
+mkdir -p /mnt/var/log /var/cache/pacman
 mount /dev/vg00/log /mnt/var/log
+mount /dev/vg00/pacman /mnt/var/cache/pacman
 mount /dev/vg00/tmp /mnt/tmp
 
-pacstrap /mnt base linux linux-firmware dhcpcd dhclient vim firefox sudo xorg-server xorg-xinit grub lvm2
+pacstrap /mnt base linux linux-firmware dhcpcd dhclient vim firefox sudo xorg-server xorg-xinit grub lvm2 archlinux-keyring
 genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt /bin/bash <<EOF
@@ -77,7 +80,7 @@ sed -i 's/fsck)/fsck systemd lvm2)/' /etc/mkinitcpio.conf
 mkinitcpio -P
 grub-install --target=i386-pc /dev/sda # replace sdx with your disk name, not the partition
 grub-mkconfig -o /boot/grub/grub.cfg
-
+systemctl enable dhcpcd.service
 useradd -m zac
 echo zac:root | chpasswd
 echo "zac ALL=(ALL) ALL" >> /etc/sudoers.d/zac
