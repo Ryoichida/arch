@@ -62,7 +62,7 @@ mkdir -p /mnt/var/cache/pacman
 mount /dev/vg00/pacman /mnt/var/cache/pacman
 mount /dev/vg00/tmp /mnt/tmp
 
-pacstrap /mnt base linux linux-firmware dhcpcd dhclient vim firefox sudo xorg-server xorg-xinit grub lvm2 archlinux-keyring virtualbox-guest-utils
+pacstrap /mnt base linux linux-firmware dhcpcd dhclient vim firefox sudo xorg-server xorg-xinit grub lvm2 archlinux-keyring virtualbox-guest-utils dmenu alacritty alsa-utils duf rsync reflector archlinux-wallpaper bash-completion lxappearance neofetch htop bpytop xdg-user-dirs picom networkmanager network-manager-applet zsh
 genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt /bin/bash <<EOF
@@ -80,14 +80,19 @@ echo root:root | chpasswd
 sed -i 's/fsck)/fsck systemd lvm2)/' /etc/mkinitcpio.conf
 mkinitcpio -P
 grub-install --target=i386-pc /dev/sda # replace sdx with your disk name, not the partition
+sed -i -e s/#GRUB_COLOR_.*/GRUB_COLOR_.*/g -e s/GRUB_GFXMODE=.*/GRUB_GFXMODE=1920x1080/ -e s/#GRUB_BACKGROUND=.*/GRUB_BACKGROUND=\/usr\/share\/backgrounds\/archlinux\/simple.png/ /etc/default/grub 
 grub-mkconfig -o /boot/grub/grub.cfg
 systemctl enable dhcpcd.service
 systemctl enable systemd-timesyncd.service
 systemctl enable systemd-time-wait-sync.service
 systemctl enable vboxservice
+systemctl enable NetworkManager
+reflector -c France -a 6 --sort rate --save /etc/pacman.d/mirrorlist
+localectl set-x11-kbmap fr
 useradd -m zac
 echo zac:root | chpasswd
 echo "zac ALL=(ALL) ALL" >> /etc/sudoers.d/zac
+xdg-user-dirs-update
 EOF
 
 shutdown -h now
