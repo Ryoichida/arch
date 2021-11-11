@@ -62,7 +62,7 @@ mkdir -p /mnt/var/cache/pacman
 mount /dev/vg00/pacman /mnt/var/cache/pacman
 mount /dev/vg00/tmp /mnt/tmp
 
-pacstrap /mnt base linux linux-firmware dhcpcd dhclient vim firefox sudo xorg-server xorg-xinit grub lvm2 archlinux-keyring virtualbox-guest-utils dmenu alacritty alsa-utils duf rsync reflector archlinux-wallpaper bash-completion lxappearance neofetch htop bpytop xdg-user-dirs picom networkmanager network-manager-applet zsh
+pacstrap /mnt base linux linux-firmware dhcpcd dhclient vim firefox sudo xorg-server xorg-xinit grub lvm2 archlinux-keyring virtualbox-guest-utils dmenu alacritty alsa-utils rsync reflector archlinux-wallpaper bash-completion lxappearance neofetch htop xdg-user-dirs picom networkmanager network-manager-applet zsh
 genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt /bin/bash <<EOF
