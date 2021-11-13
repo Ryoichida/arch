@@ -82,11 +82,11 @@ pacman -Syy duf bpytop --noconfirm
 sed -i 's/fsck)/fsck systemd lvm2)/' /etc/mkinitcpio.conf
 mkinitcpio -P
 grub-install --target=i386-pc /dev/sda # replace sdx with your disk name, not the partition
-sed -i -e s/#GRUB_COLOR_/GRUB_COLOR_/g /etc/default/grub
-sed -i -e s/GRUB_GFXMODE=.*/GRUB_GFXMODE=1920x1080/ /etc/default/grub
-sed -i -e s/quiet/quiet video=1920x1080/ /etc/default/grub
-sed -i -e s@#GRUB_BACKGROUND=.*@GRUB_BACKGROUND=/usr/share/backgrounds/archlinux/simple.png@ /etc/default/grub 
-sed -i -e s@GRUB_COLOR_HIGHLIGHT="light-cyan/blue"@GRUB_COLOR_HIGHLIGHT="light-green/light-blue"@ /etc/default/grub
+sed -i -e 's/#GRUB_COLOR_/GRUB_COLOR_/g' /etc/default/grub
+sed -i -e 's/GRUB_GFXMODE=.*/GRUB_GFXMODE=1920x1080/' /etc/default/grub
+sed -i -e 's/quiet/quiet video=1920x1080/' /etc/default/grub
+sed -i -e 's@#GRUB_BACKGROUND=.*@GRUB_BACKGROUND=/usr/share/backgrounds/archlinux/simple.png@' /etc/default/grub 
+sed -i -e 's@GRUB_COLOR_HIGHLIGHT="light-cyan/blue"@GRUB_COLOR_HIGHLIGHT="light-green/light-blue"@' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 systemctl enable dhcpcd.service
 systemctl enable systemd-timesyncd.service
