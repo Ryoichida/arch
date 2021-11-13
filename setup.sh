@@ -62,7 +62,7 @@ mkdir -p /mnt/var/cache/pacman
 mount /dev/vg00/pacman /mnt/var/cache/pacman
 mount /dev/vg00/tmp /mnt/tmp
 
-pacstrap /mnt base linux linux-firmware dhcpcd dhclient vim firefox sudo xorg-server xorg-xinit grub lvm2 virtualbox-guest-utils dmenu alacritty alsa-utils rsync reflector archlinux-wallpaper bash-completion lxappearance neofetch htop xdg-user-dirs picom networkmanager network-manager-applet zsh
+pacstrap /mnt base linux linux-firmware git dhcpcd dhclient vim firefox sudo wget xorg-server xorg-xinit grub lvm2 virtualbox-guest-utils dmenu alacritty alsa-utils rsync reflector archlinux-wallpaper bash-completion lxappearance neofetch htop xdg-user-dirs picom networkmanager network-manager-applet zsh
 genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt /bin/bash <<EOF
@@ -82,7 +82,7 @@ pacman -Syy duf bpytop --noconfirm
 sed -i 's/fsck)/fsck systemd lvm2)/' /etc/mkinitcpio.conf
 mkinitcpio -P
 grub-install --target=i386-pc /dev/sda # replace sdx with your disk name, not the partition
-sed -i -e s/#GRUB_COLOR_/GRUB_COLOR_/g -e s/GRUB_GFXMODE=.*/GRUB_GFXMODE=1920x1080/ /etc/default/grub
+sed -i -e s/#GRUB_COLOR_/GRUB_COLOR_/g -e s/GRUB_GFXMODE=.*/GRUB_GFXMODE=1920x1080/ -e s/quiet/quiet video=1920x1080/ /etc/default/grub
 sed -i -e s@#GRUB_BACKGROUND=.*@GRUB_BACKGROUND=/usr/share/backgrounds/archlinux/simple.png@ /etc/default/grub 
 sed -i -e s@GRUB_COLOR_HIGHLIGHT="light-cyan/blue"@GRUB_COLOR_HIGHLIGHT="light-green/light-blue"@ /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
