@@ -62,7 +62,7 @@ mkdir -p /mnt/var/cache/pacman
 mount /dev/vg00/pacman /mnt/var/cache/pacman
 mount /dev/vg00/tmp /mnt/tmp
 
-pacstrap /mnt base linux linux-firmware git dhcpcd dhclient vim firefox sudo wget xorg-server xorg-xinit grub lvm2 virtualbox-guest-utils dmenu alacritty alsa-utils rsync reflector archlinux-wallpaper bash-completion lxappearance neofetch htop xdg-user-dirs picom networkmanager network-manager-applet zsh
+pacstrap /mnt base linux linux-firmware 
 genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt /bin/bash <<EOF
@@ -78,6 +78,7 @@ echo "::1       localhost" >> /etc/hosts
 echo "127.0.1.1 void.localdomain void" >> /etc/hosts
 echo root:root | chpasswd
 pacman -Syy archlinux-keyring --noconfirm
+pacman -Syy git dhcpcd dhclient vim firefox sudo wget xorg-server xorg-xinit grub lvm2 virtualbox-guest-utils dmenu alacritty alsa-utils rsync reflector archlinux-wallpaper bash-completion lxappearance neofetch htop xdg-user-dirs picom networkmanager network-manager-applet zsh --noconfirm
 pacman -Syy duf bpytop --noconfirm
 sed -i 's/fsck)/fsck systemd lvm2)/' /etc/mkinitcpio.conf
 mkinitcpio -P
