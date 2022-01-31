@@ -94,6 +94,10 @@ systemctl enable systemd-timesyncd.service
 systemctl enable systemd-time-wait-sync.service
 systemctl enable vboxservice
 systemctl enable NetworkManager
+amixer sset Master unmute
+amixer sset PCM unmute
+amixer sset Master 100%
+amixer sset PCM 100%
 reflector -c France -a 6 --sort rate --save /etc/pacman.d/mirrorlist
 useradd -m zac
 echo zac:root | chpasswd
