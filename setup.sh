@@ -78,7 +78,7 @@ echo "::1       localhost" >> /etc/hosts
 echo "127.0.1.1 void.localdomain void" >> /etc/hosts
 echo root:root | chpasswd
 pacman -Syy archlinux-keyring --noconfirm
-pacman -Syy git dhcpcd dhclient vim firefox sudo wget xorg-server xorg-xinit grub feh bspwm sxhkd lvm2 virtualbox-guest-utils dmenu alacritty alsa-utils rsync reflector archlinux-wallpaper bash-completion lxappearance neofetch htop xdg-user-dirs picom networkmanager network-manager-applet zsh --noconfirm
+pacman -Syy git dhcpcd dhclient vim firefox sudo wget xorg-server xorg-xinit grub feh bspwm sxhkd xorg-xsetroot lvm2 virtualbox-guest-utils dmenu alacritty alsa-utils rsync reflector archlinux-wallpaper bash-completion lxappearance neofetch htop xdg-user-dirs picom networkmanager network-manager-applet zsh --noconfirm
 pacman -Syy duf bpytop --noconfirm
 sed -i 's/fsck)/fsck systemd lvm2)/' /etc/mkinitcpio.conf
 mkinitcpio -P
